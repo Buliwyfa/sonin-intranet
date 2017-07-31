@@ -21,7 +21,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'description') ?>
 
-    <?= $form->field($model, 'status')->dropDownList($status) ?>
+    <?= $form->field($model, 'status', ['options' => ['class' => ' input-field fly-label']])->dropDownList($status) ?>
 
     <?= $form->field($model, 'quantity') ?>
 
@@ -46,9 +46,14 @@ use yii\widgets\ActiveForm;
     <?php // echo $form->field($model, 'requiredate') ?>
 
     <div class="form-group">
-        <?= Html::submitButton('<i class="fa fa-search"></i>', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('<i class="fa fa-refresh"></i>', ['class' => 'btn btn-default']) ?>
-        <?= Html::a('<i class="fa fa-plus-circle"></i>', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('<i class="material-icons">search</i>', ['class' => 'bg-blue-300 waves-effect waves-light btn']) ?>
+        <?= Html::resetButton('<i class="material-icons">clear</i>', ['class' => 'bg-blue-300 waves-effect waves-light btn']) ?>
+
+
+        <div class="fixed-action-btn">
+            <?= Html::a('<i class="large material-icons">add</i>', ['create'], ['class' => 'btn-floating btn-large red waves-effect waves-light']) ?>
+        </div>
+
     </div>
 
     <?php ActiveForm::end(); ?>

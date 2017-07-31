@@ -5,6 +5,7 @@ namespace humhub\modules\tickreq\controllers;
 use humhub\modules\tickreq\permissions\CheckRequest;
 use humhub\modules\tickreq\permissions;
 use humhub\modules\user\models\Group;
+use humhub\modules\user\models\Profile;
 use humhub\modules\user\models\User;
 use Yii;
 use humhub\modules\tickreq\models\Tickreq;
@@ -14,6 +15,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use humhub\modules\tickreq\permissions\ApproveRequest;
+use humhub\libs\ProfileImage;
 
 /**
  * TickreqController implements the CRUD actions for Tickreq model.
@@ -42,18 +44,20 @@ class DefaultController extends Controller
      */
     public function actionIndex()
     {
+
         $searchModel = new TickreqSearch();
+        // $profile = Profile::find()->where(['id' => $searchModel->source])->one();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $canApprove = Yii::$app->user->can(new ApproveRequest());
         $canCheck = Yii::$app->user->can(new CheckRequest());
-        $ITService = Yii::$app->user->can(new permissions\ITServiceRequest());
+        $canComplete = Yii::$app->user->can(new permissions\CompleteRequest());
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'canApprove' => $canApprove,
             'canCheck' => $canCheck,
-            'ITService' => $ITService,
+            'canComplete' => $canComplete,
         ]);
     }
 
@@ -64,17 +68,16 @@ class DefaultController extends Controller
      */
     public function actionView($id)
     {
+
         $model = $this->findModel($id);
         $source = Group::find()->where(['id' => $model->source])->one();
         $user = User::find()->where(['id' => Yii::$app->user->getId()])->one();
         $canApprove = Yii::$app->user->can(new ApproveRequest());
         $canCheck = Yii::$app->user->can(new CheckRequest());
-        $ITService = Yii::$app->user->can(new permissions\ITServiceRequest());
         return $this->render('view', [
             'model' => $model,
             'canApprove' => $canApprove,
             'canCheck' => $canCheck,
-            'ITService' => $ITService,
             'source' => $source->name,
         ]);
     }
@@ -185,6 +188,26 @@ class DefaultController extends Controller
         $model->status = 4;
         $model->approvedate =  Yii::$app->formatter->asDate('now', 'yyyy-MM-dd');
         $model->approvedby = Yii::$app->user->identity->getId();
+        $model->update();
+        return $this->redirect(['index']);
+    }
+
+    public function actionComplete($id)
+    {
+        $model = $this->findModel($id);
+        $model->status = 5;
+        $model->completedate = Yii::$app->formatter->asDate('now', 'yyyy-MM-dd');
+        $model->completedby = Yii::$app->user->identity->getId();
+        $model->update();
+        return $this->redirect(['index']);
+    }
+
+    public function actionFail($id)
+    {
+        $model = $this->findModel($id);
+        $model->status = 6;
+        $model->faildate = Yii::$app->formatter->asDate('now', 'yyyy-MM-dd');
+        $model->failedby = Yii::$app->user->identity->getId();
         $model->update();
         return $this->redirect(['index']);
     }

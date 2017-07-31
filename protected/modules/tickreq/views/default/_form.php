@@ -22,38 +22,40 @@ use yii\db\Expression;
     <?php $form = ActiveForm::begin(); ?>
     <div class="form-group">
         <div class="col-md-10 col-xs-12">
-            <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'description', ['options' => ['class' => ' input-field ']])->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-md-2 col-xs-12">
-            <?= $form->field($model, 'source')->dropDownList($source)?>
+            <?= $form->field($model, 'source', ['options' => ['class' => ' input-field fly-label']])->dropDownList($source) ?>
         </div>
+
     </div>
     <div class="form-group">
         <div class="col-md-2 col-xs-12">
-            <?= $form->field($model, 'status')->dropDownList($status)?>
+            <?= $form->field($model, 'status', ['options' => ['class' => ' input-field fly-label']])->dropDownList($status) ?>
         </div>
         <div class="col-md-2 col-xs-12">
-            <?= $form->field($model, 'quantity')->textInput(['type' => 'number']) ?>
+            <?= $form->field($model, 'quantity', ['options' => ['class' => ' input-field ']])->textInput(['type' => 'number']) ?>
         </div>
         <div class="col-md-2 col-xs-12">
-            <?= $form->field($model, 'cost')->textInput() ?>
+            <?= $form->field($model, 'cost', ['options' => ['class' => ' input-field ']])->textInput() ?>
         </div>
         <div class="col-md-2 col-xs-12">
-            <?= $form->field($model, 'type')->dropDownList($type) ?>
+            <?= $form->field($model, 'type', ['options' => ['class' => ' input-field fly-label']])->dropDownList($type) ?>
         </div>
         <div class="col-md-2 col-xs-12">
-            <?= $form->field($model, 'urgency')->dropDownList($urgency) ?>
+            <?= $form->field($model, 'urgency', ['options' => ['class' => ' input-field fly-label']])->dropDownList($urgency) ?>
         </div>
             <?= $form->field($model, 'createdby')->hiddenInput(['value' => $uid])->label(false) ?>
             <?= $form->field($model, 'createdate')->hiddenInput(['value'=> $now])->label(false) ?>
         <div class="col-md-2 col-xs-12">
-            <?= $form->field($model, 'requiredate')->widget(\yii\jui\DatePicker::classname(), [
-                //'language' => 'ru',
+            <?= $form->field($model, 'requiredate', ['options' => ['class' => ' input-field ']])->widget(\yii\jui\DatePicker::classname(), [
                 'dateFormat' => 'yyyy-MM-dd',
+                'options' => ['class' => 'datepicker']
             ]) ?>
         </div>
     </div>
     <div class="col-xs-12">
+
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 

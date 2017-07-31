@@ -17,7 +17,7 @@ class Events extends \yii\base\Object
     {
         $event->sender->addItem(array(
             'label' => "Request",
-            'icon' => '<i class="fa fa-cube"></i>',
+            'icon' => '<i class="fa fa-shopping-bag"></i>',
             'url' => Url::to(['/tickreq/default']),
             'sortOrder' => 99999,
             'isActive' => (Yii::$app->controller->module && Yii::$app->controller->module->id == 'tickreq' && Yii::$app->controller->id == 'default'),

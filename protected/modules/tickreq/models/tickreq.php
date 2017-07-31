@@ -32,6 +32,10 @@ use yii\helpers\ArrayHelper;
  * @property string $approvedate
  * @property string $requiredate
  * @property string $requestcode
+ * @property integer $completedby
+ * @property string $completedate
+ * @property string $faildate
+ * @property string $failedby
  * @property string $source
  */
 class tickreq extends ContentActiveRecord
@@ -39,8 +43,6 @@ class tickreq extends ContentActiveRecord
     /**
      * @inheritdoc
      */
-/*    public $streamChannel = null;
-    public $wallEntryClass = 'humhub\modules\tickreq\widgets\WallEntry';*/
 
     public static function tableName()
     {
